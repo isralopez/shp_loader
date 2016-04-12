@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{{ SITE_NAME }}{% endblock %}</title>
+    {% block head %}
+
+        {% if DEBUG_STATIC %}
+      <link href="{{ STATIC_URL }}lib/css/jquery-ui.css" rel="stylesheet"/>
+      {% else %}
+      <link href="{{ STATIC_URL }}base/css/font-awesome.css" rel="stylesheet" />
+      <link href="{{ STATIC_URL }}base/css/base.css" rel="stylesheet"/>
+      <link href="{{ STATIC_URL }}base/css/agree_base.css" rel="stylesheet"/>
+      <link href="{{ STATIC_URL }}base/css/infraestructura.css" rel="stylesheet"/>
+            <link href="{{ STATIC_URL }}base/css/table.css" rel="stylesheet"/>
+        {% endif %}
+      <style type="text/css">[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}</style>
+      {% block extra_head %}
+      {% endblock %}
+    {% endblock %}
+  </head>
+
+  <body class="{% block body_class %}{% endblock %}">
+
+    {% block header %}
+      <div id="home-container">
+
+<!--TOP-NAV-->
+	<nav id="top-navbar" class="navbar" role="navigation">
+		<div class="container">
+
+
+
+
+         <div id="mm-header-logos">
+                    <span id="mm-logo-conacyt">
+                         <a href="http://www.conacyt.mx/" title="Conacyt">
+                            <img src="{{ STATIC_URL }}base/img/logo-conacyt.png" title="Consejo Nacional de Ciencia y Tecnología" alt="www.conacyt.org">
+                        </a>
+                    </span>
+              <span id="mm-logo-centrogeo">
+                           <a href="http://www.centrogeo.mx/" title="Conacyt">
+                            <img src="{{ STATIC_URL }}base/img/logo-centrogeo.png" title="Centro de Investigación en Geografía y Geomática ''Ing. Jorge L. Tamayo'', A.C." alt="www.centrogeo.org" >
+                        </a>
+                    </span>
+
+                </div>
+				<div id="mm-header-sitename">
+					<h5>
+                        <span class="span-nowrap">Centro de Investigación</span>
+                        <span class="span-nowrap">en Geografía y Geomática</span>
+                        <span class="span-break">"Ing. Jorge L. Tamayo", A.C.</span>
+                    </h5>
+				</div>
+		</div>
+	</nav>
+
+
+<div id='cssmenu'>
+<ul>
+    <li class="inicio"><a href='#'>Propuestas/Convenios</a></li>
+    {% if user.is_authenticated %}
+    <li class="propuestas"><a href='#'>Instituciones</a>
+     <li class="convenios"><a href='#'>Convenios</a></li>
+   <li class="propuestas"><a href='#'>Propuestas</a>
+    <li class="doctos"><a href='#'>Documentos</a></li>
+   </li>
+    <!--
+    <li class="doctos"><a href='#'>Documentos</a></li>-->
+
+        <li class="users"><a href='{% url 'manager.views.user_detail' user.id %}'>Usuarios</a></li>
+        {% if user.is_staff %}
+              <li class="users"><a href='{% url 'manager.views.user_list' %}'>Administración</a></li>
+        {% endif %}
+    {% endif %}
+
+
+</ul>
+</div>
+
+
+</div>
+
+<div id="ieflag" class="alert alert-danger alert-dismissible" role="alert" style="display: none;">
+		<div class="container">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h3>You are using an outdated browser that is not supported on this Website.</h3>
+			<p>Please use a <strong>modern browser</strong> like Mozilla Firefox, Google Chrome or Safari.</p>
+		</div>
+	</div>
+
+      	<!--MESSAGE-->
+		<div id="status-message" class="alert alert-warn" hidden="hidden">
+			<div class="container"><a class="close" onclick="$('.alert').hide()">×</a>
+				<p id="status-message-text">Placeholder for status-message</p>
+				<p id="status-message-text-body">Placeholder for status-message-body</p>
+			</div>
+		</div>
+
+    {% endblock header %}
+
+    <div class="alert alert-danger alert-dismissible" role="alert" id="ieflag" style="display:none">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h1>You are using an outdated browser that is not supported by GeoNode.</h1>
+      <p>Please use a <strong>modern browser</strong> like Mozilla Firefox, Google Chrome or Safari.</p>
+    </div>
+  <div id="wrap">
+    {% block map_view %}{% endblock %}
+    {% block middle %}
+   <!-- <div class="container"> -->
+      {% block body_outer %}
+        {% block body %}{% endblock %}
+        <div class="col-md-4">
+        {% block sidebar %}{% endblock %}
+        </div>
+      {% endblock %}
+      <!-- </div> -->
+    {% endblock middle %}
+  </div>
+
+
+<!--BOTTOM-NAV-->
+	<div id="bottom-nav">
+		<div class="container">
+			<div class="bottom-nav-logos col-md-8">
+
+			</div>
+			<div>
+				<ul>
+					<li><a href="http://www.conacyt.mx/">Acerca de CONACYT</a></li>
+					<li><a href="http://www.centrogeo.org.mx/" title="www.centrogeo.org.mx">Creado por CentroGeo</a></li>
+					<li><a href="#">Contacto</a></li>
+				</ul>
+				<div class="bottom-nav-commons">
+					<div class="nav-commons">
+                        <a href="http://centrogeo.org.mx/" target="_blank" rel="license" title="Esta obra está bajo una licencia de Creative Commons Reconocimiento-NoComercial-CompartirIgual 2.5 México.">
+                            <img style="border: 0px none;" src="{{ STATIC_URL }}base/img/cc_by-nc-sa.png" alt="cc by-nc-sa"></a></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    {% block footer %}
+    <footer id="footer">
+		<div class="container">
+			<div class="col-md-12">2016 CONACYT: Consejo Nacional de Ciencia y Tecnología.</div>
+		</div>
+	</footer>
+    {% endblock footer %}
+
+    <!-- Modal must stay outside the navbar -->
+    {% if not user.is_authenticated %}
+    <div class="modal fade" id="SigninModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Sign in</h4>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    {% else %}
+
+    <div class="modal fade" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Menu</h4>
+          </div>
+          <div class="modal-body">
+            <a href="{% url 'manager.views.nuevo_usuario' %}">Registrar Usuarios</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <!-- End of Modal -->
+
+
+    {% block extra_script %}{% endblock extra_script %}
+        <!--Boostrap modal-->
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+
+ <script type="text/javascript">
+$(document).ready(function(){
+    $("#myBtn").click(function(){
+        $("#myModal").modal();
+    });
+});
+</script>
+
+   </body>
+</html>
