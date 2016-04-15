@@ -61,23 +61,15 @@
 
 <div id='cssmenu'>
 <ul>
-    <li class="inicio"><a href='#'>Propuestas/Convenios</a></li>
+    <li class="inicio"><a href="{% url 'home' %}">Home</a></li>
+    <li class="upl_layer"><a href="{% url 'layer_upload'%}">Subir Capa</a>
     {% if user.is_authenticated %}
-    <li class="propuestas"><a href='#'>Instituciones</a>
-     <li class="convenios"><a href='#'>Convenios</a></li>
-   <li class="propuestas"><a href='#'>Propuestas</a>
-    <li class="doctos"><a href='#'>Documentos</a></li>
-   </li>
-    <!--
-    <li class="doctos"><a href='#'>Documentos</a></li>-->
-
+        <!--<li class="doctos"><a href='#'>Documentos</a></li>-->
         <li class="users"><a href='{% url 'manager.views.user_detail' user.id %}'>Usuarios</a></li>
         {% if user.is_staff %}
               <li class="users"><a href='{% url 'manager.views.user_list' %}'>Administración</a></li>
         {% endif %}
     {% endif %}
-
-
 </ul>
 </div>
 
